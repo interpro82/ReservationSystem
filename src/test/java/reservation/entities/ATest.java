@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 
 public abstract class ATest<T> {
@@ -18,6 +19,11 @@ public abstract class ATest<T> {
 	@After
 	public void tearDown() {
 		manager.close();
+	}
+
+	@AfterClass
+	public static void closeFactory() {
+		FactoryHolder.getInstance().getFactory().close();
 	}
 
 	protected void save(T entity) {

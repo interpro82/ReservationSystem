@@ -5,7 +5,7 @@ import javax.persistence.Persistence;
 
 public class FactoryHolder {
 
-	private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("reservation_system");
+	private EntityManagerFactory factory = Persistence.createEntityManagerFactory("reservation_system");
 
 	private static FactoryHolder instance = new FactoryHolder();
 
@@ -17,6 +17,9 @@ public class FactoryHolder {
 	}
 
 	public EntityManagerFactory getFactory() {
+		if (!factory.isOpen()) {
+			factory = Persistence.createEntityManagerFactory("reservation_system");
+		}
 		return factory;
 	}
 
